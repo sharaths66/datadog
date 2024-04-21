@@ -21,6 +21,9 @@ spec:
     clusterAgent:
       image:
         name: gcr.io/datadoghq/cluster-agent:latest
+      env:
+        - name: DD_KUBERNETES_APISERVER_CLIENT_TIMEOUT
+          value: 15
     nodeAgent:
       image:
         name: gcr.io/datadoghq/agent:latest
@@ -41,5 +44,6 @@ spec:
       enabled: true
     externalMetricsServer:
       enabled: true
-    
+    orchestratorExplorer:
+      enabled: true
       
