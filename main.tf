@@ -25,7 +25,7 @@ resource "google_service_account" "datadog_sa" {
 
 // Add necessary roles to datadog service account
 resource "google_project_iam_member" "add_roles" {
-  depends_on = [google_service_account.sa]
+  depends_on = [google_service_account.datadog_sa]
   for_each = toset([
     "roles/compute.viewer",
     "roles/monitoring.viewer",
