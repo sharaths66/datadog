@@ -1,0 +1,45 @@
+kind: DatadogAgent
+apiVersion: datadoghq.com/v2alpha1
+metadata:
+  name: datadog
+  namespace: datadog
+spec:
+  global:
+    clusterName: gcp-example-cluster
+    site: datadoghq.eu
+    tags:
+      - project:datadog-gcp
+      - team:devops
+    credentials:
+      apiSecret:
+        secretName: datadog-secret
+        keyName: api-key
+      appSecret:
+        secretName: datadog-secret
+        keyName: app-key
+  override:
+    clusterAgent:
+      image:
+        name: gcr.io/datadoghq/cluster-agent:latest
+    nodeAgent:
+      image:
+        name: gcr.io/datadoghq/agent:latest
+  features:
+    logCollection:
+      enabled: true
+      containerCollectAll: true
+    eventCollection:
+      collectKubernetesEvents: true
+    admissionController:
+      enabled: true
+      mutateUnlabelled: false
+    apm:
+      enabled: true
+      unixDomainSocketConfig:
+        path: /var/run/datadog/apm.socket
+    liveProcessCollection:
+      enabled: true
+    externalMetricsServer:
+      enabled: true
+    
+      
